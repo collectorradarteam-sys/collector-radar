@@ -34,11 +34,11 @@
     .dot.yellow{background:var(--accent2)}
     .dot.blue{background:var(--blue)}
 
-    /* LAYOUT RIGA EMAIL RIPRISTINATO */
     .cta-box{max-width:480px;margin:0 auto 60px;position:relative}
-    .cta-row{display:flex;gap:10px;background:#fff;padding:8px;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);width:100%}
+    /* RITORNO AL TUO LAYOUT ORIGINALE */
+    .cta-row{display:flex;gap:10px;background:#fff;padding:8px;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
     .cta-row input{flex:1;border:none;padding:12px 15px;font-size:16px;outline:none;border-radius:var(--radius-sm);font-family:inherit}
-    .cta-row button{background:var(--text);color:#fff;border:none;padding:0 25px;border-radius:16px;font-weight:700;font-size:15px;cursor:pointer;transition:transform 0.2s; white-space: nowrap;}
+    .cta-row button{background:var(--text);color:#fff;border:none;padding:0 25px;border-radius:16px;font-weight:700;font-size:15px;cursor:pointer;transition:transform 0.2s}
     .cta-row button:hover{transform:scale(1.02)}
     
     .micro{margin-top:12px;font-size:13px;color:var(--muted)}
@@ -71,8 +71,6 @@
     @media(max-width:900px){
       .preview-grid,.features{grid-template-columns:1fr}
       h1{font-size:60px}
-      .cta-row{flex-direction:column; border-radius: 16px;}
-      .cta-row button{padding: 12px;}
     }
   </style>
 </head>
@@ -103,11 +101,10 @@
     </div>
 
     <div class="cta-box">
-      <form class="cta-row" id="emailForm">
-        <input type="hidden" name="access_key" value="3a3ee7e7-56fa-49e1-ad9d-ad5f707ae275">
-        <input type="email" name="email" id="emailInput" placeholder="Enter your email" required />
-        <button type="submit" id="ctaButton">Join the waitlist</button>
-      </form>
+      <div class="cta-row">
+        <input type="email" id="emailInput" placeholder="Enter your email" />
+        <button id="ctaButton">Join the waitlist</button>
+      </div>
       <div id="errorText">Please enter a valid email address.</div>
       <div id="successText">Great! You're on the list.</div>
       <div class="micro" id="ctaMicro">Be first to access the global launch.</div>
@@ -230,9 +227,8 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
     }
 
-    const form = document.getElementById('emailForm');
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
+    // GESTIONE INVIO (SOLO QUESTA PARTE È NUOVA)
+    document.getElementById("ctaButton").addEventListener("click", async () => {
       const input = document.getElementById("emailInput");
       const error = document.getElementById("errorText");
       const success = document.getElementById("successText");
@@ -246,26 +242,32 @@
         return;
       }
 
-      button.innerText = "...";
       button.disabled = true;
+      const originalText = button.innerText;
+      button.innerText = "...";
 
-      const formData = new FormData(form);
       try {
         const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
-          body: formData
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            access_key: "3a3ee7e7-56fa-49e1-ad9d-ad5f707ae275",
+            email: input.value.trim(),
+            from_name: "Collector Radar Lead"
+          })
         });
+
         if (response.ok) {
           success.style.display = "block";
           input.value = "";
         } else {
           error.style.display = "block";
         }
-      } catch (err) {
+      } catch (e) {
         error.style.display = "block";
       } finally {
-        button.innerText = "Join the waitlist";
         button.disabled = false;
+        button.innerText = originalText;
       }
     });
 
