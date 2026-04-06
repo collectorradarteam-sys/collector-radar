@@ -10,66 +10,309 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#ffffff; --panel:#ffffff; --soft:#f6f6f4; --soft2:#efefeb;
-      --text:#111111; --muted:#656565; --line:#e6e6e1;
-      --accent:#d71920; --accent2:#ffd200; --ok:#0a7a49;
-      --blue:#1f57d6; --shadow:0 10px 30px rgba(0,0,0,.06);
-      --radius:22px; --radius-sm:16px; --max:1180px;
+      --bg:#ffffff;
+      --panel:#ffffff;
+      --soft:#f6f6f4;
+      --soft2:#efefeb;
+      --text:#111111;
+      --muted:#656565;
+      --line:#e6e6e1;
+      --accent:#d71920;
+      --accent2:#ffd200;
+      --ok:#0a7a49;
+      --blue:#1f57d6;
+      --shadow:0 10px 30px rgba(0,0,0,.06);
+      --radius:22px;
+      --radius-sm:16px;
+      --max:1180px;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
-    header{width:100%;max-width:var(--max);margin:0 auto;padding:20px;display:flex;justify-content:space-between;align-items:center}
-    .logo{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:0.5px;display:flex;align-items:center;gap:8px}
+    html,body{
+      margin:0;
+      padding:0;
+      font-family:'Inter', sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    header{
+      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .logo{
+      font-family:'Bebas Neue', cursive;
+      font-size:28px;
+      letter-spacing:0.5px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
     .logo span{color:var(--accent)}
-    .lang-switcher select{border:1px solid var(--line);padding:6px 10px;border-radius:10px;font-size:13px;outline:none;cursor:pointer;background:#fff}
     
-    .hero{max-width:800px;margin:60px auto 40px;text-align:center;padding:0 20px}
-    .eyebrow{display:inline-block;padding:6px 14px;background:var(--soft2);border-radius:30px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
-    h1{font-family:'Bebas Neue',cursive;font-size:clamp(48px,10vw,86px);line-height:0.9;margin:0 0 20px;letter-spacing:-1px}
-    .sub{font-size:19px;color:var(--muted);line-height:1.5;max-width:600px;margin:0 auto 30px;font-weight:400}
-    
-    .badges{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:40px}
-    .badge{padding:8px 16px;background:#fff;border:1px solid var(--line);border-radius:14px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow)}
-    .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+    .lang-switcher select{
+      border:1px solid var(--line);
+      padding:6px 10px;
+      border-radius:10px;
+      font-size:13px;
+      outline:none;
+      cursor:pointer;
+      background:#fff;
+    }
+
+    .hero{
+      max-width:800px;
+      margin:60px auto 40px;
+      text-align:center;
+      padding:0 20px;
+    }
+    .eyebrow{
+      display:inline-block;
+      padding:6px 14px;
+      background:var(--soft2);
+      border-radius:30px;
+      font-size:12px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      margin-bottom:20px;
+    }
+    h1{
+      font-family:'Bebas Neue', cursive;
+      font-size:clamp(48px, 10vw, 86px);
+      line-height:0.9;
+      margin:0 0 20px;
+      letter-spacing:-1px;
+    }
+    .sub{
+      font-size:19px;
+      color:var(--muted);
+      line-height:1.5;
+      max-width:600px;
+      margin:0 auto 30px;
+      font-weight:400;
+    }
+
+    .badges{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:12px;
+      margin-bottom:40px;
+    }
+    .badge{
+      padding:8px 16px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      font-size:14px;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:var(--shadow);
+    }
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--accent);
+    }
     .dot.yellow{background:var(--accent2)}
     .dot.blue{background:var(--blue)}
 
-    .cta-box{max-width:480px;margin:0 auto 60px;position:relative}
-    /* RITORNO AL TUO LAYOUT ORIGINALE */
-    .cta-row{display:flex;gap:10px;background:#fff;padding:8px;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .cta-row input{flex:1;border:none;padding:12px 15px;font-size:16px;outline:none;border-radius:var(--radius-sm);font-family:inherit}
-    .cta-row button{background:var(--text);color:#fff;border:none;padding:0 25px;border-radius:16px;font-weight:700;font-size:15px;cursor:pointer;transition:transform 0.2s}
-    .cta-row button:hover{transform:scale(1.02)}
+    .cta-box{
+      max-width:480px;
+      margin:0 auto 60px;
+      position:relative;
+    }
+    .cta-row{
+      display:flex;
+      gap:10px;
+      background:#fff;
+      padding:8px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .cta-row input{
+      flex:1;
+      border:none;
+      padding:12px 15px;
+      font-size:16px;
+      outline:none;
+      border-radius:var(--radius-sm);
+      font-family:inherit;
+    }
+    .cta-row button{
+      background:var(--text);
+      color:#fff;
+      border:none;
+      padding:0 25px;
+      border-radius:16px;
+      font-weight:700;
+      font-size:15px;
+      cursor:pointer;
+      transition:transform 0.2s;
+    }
+    .cta-row button:hover{
+      transform:scale(1.02);
+    }
     
-    .micro{margin-top:12px;font-size:13px;color:var(--muted)}
-    #errorText{color:var(--accent);font-size:13px;margin-top:8px;display:none;font-weight:600}
-    #successText{color:var(--ok);font-size:13px;margin-top:8px;display:none;font-weight:600}
+    .micro{
+      margin-top:12px;
+      font-size:13px;
+      color:var(--muted);
+    }
 
-    .preview-grid{max-width:var(--max);margin:0 auto 100px;display:grid;grid-template-columns:1.5fr 1fr;gap:20px;padding:0 20px}
-    .panel{background:var(--soft);border-radius:var(--radius);padding:30px;border:1px solid var(--line)}
-    h3{font-family:'Bebas Neue',cursive;font-size:24px;margin:0 0 20px;display:flex;align-items:center;gap:10px}
-    .item-list{display:flex;flex-direction:column;gap:12px}
-    .item{background:#fff;padding:15px;border-radius:var(--radius-sm);display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line)}
-    .it-info span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
-    .it-info strong{font-size:15px}
-    .it-btn{font-size:12px;font-weight:800;padding:6px 12px;border-radius:8px;background:var(--soft);color:var(--text);text-decoration:none}
-    .it-btn.prime{background:var(--accent);color:#fff}
-    
-    .stats{display:flex;flex-direction:column;gap:15px}
-    .stat-row{display:flex;justify-content:space-between;align-items:center}
-    .stat-n{font-weight:800;font-size:18px}
-    .bar-bg{height:8px;background:var(--soft2);border-radius:10px;flex:1;margin:0 15px;overflow:hidden}
-    .bar-fill{height:100%;background:var(--text);border-radius:10px}
+    #errorText{
+      color:var(--accent);
+      font-size:13px;
+      margin-top:8px;
+      display:none;
+      font-weight:600;
+    }
+    #successText{
+      color:var(--ok);
+      font-size:13px;
+      margin-top:8px;
+      display:none;
+      font-weight:600;
+    }
 
-    .features{max-width:var(--max);margin:0 auto 100px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:0 20px}
-    .f-card{padding:30px;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
-    .f-card h4{font-family:'Bebas Neue',cursive;font-size:22px;margin:0 0 10px}
-    .f-card p{margin:0;font-size:15px;color:var(--muted);line-height:1.5}
+    .preview-grid{
+      max-width:var(--max);
+      margin:0 auto 100px;
+      display:grid;
+      grid-template-columns:1.5fr 1fr;
+      gap:20px;
+      padding:0 20px;
+    }
+    .panel{
+      background:var(--soft);
+      border-radius:var(--radius);
+      padding:30px;
+      border:1px solid var(--line);
+    }
+    h3{
+      font-family:'Bebas Neue', cursive;
+      font-size:24px;
+      margin:0 0 20px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
 
-    footer{text-align:center;padding:60px 20px;border-top:1px solid var(--line);margin-top:40px;color:var(--muted);font-size:14px}
+    .item-list{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .item{
+      background:#fff;
+      padding:15px;
+      border-radius:var(--radius-sm);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border:1px solid var(--line);
+    }
+    .it-info span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+    .it-info strong{
+      font-size:15px;
+    }
+    .it-btn{
+      font-size:12px;
+      font-weight:800;
+      padding:6px 12px;
+      border-radius:8px;
+      background:var(--soft);
+      color:var(--text);
+      text-decoration:none;
+    }
+    .it-btn.prime{
+      background:var(--accent);
+      color:#fff;
+    }
 
-    @media(max-width:900px){
-      .preview-grid,.features{grid-template-columns:1fr}
+    .stats{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+    .stat-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .stat-n{
+      font-weight:800;
+      font-size:18px;
+    }
+    .bar-bg{
+      height:8px;
+      background:var(--soft2);
+      border-radius:10px;
+      flex:1;
+      margin:0 15px;
+      overflow:hidden;
+    }
+    .bar-fill{
+      height:100%;
+      background:var(--text);
+      border-radius:10px;
+    }
+
+    .features{
+      max-width:var(--max);
+      margin:0 auto 100px;
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:20px;
+      padding:0 20px;
+    }
+    .f-card{
+      padding:30px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+    }
+    .f-card h4{
+      font-family:'Bebas Neue', cursive;
+      font-size:22px;
+      margin:0 0 10px;
+    }
+    .f-card p{
+      margin:0;
+      font-size:15px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    footer{
+      text-align:center;
+      padding:60px 20px;
+      border-top:1px solid var(--line);
+      margin-top:40px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    @media (max-width: 900px) {
+      .preview-grid, .features {
+        grid-template-columns: 1fr;
+      }
       h1{font-size:60px}
     }
   </style>
@@ -116,35 +359,45 @@
       <h3 id="panelTitle1">Top opportunities</h3>
       <div class="item-list">
         <div class="item">
-          <div class="it-info"><strong id="item1name">Luffy Gear 5 Special</strong><span id="item1sub">Funko Pop • Stock pressure rising</span></div>
+          <div class="it-info">
+            <strong id="item1name">Luffy Gear 5 Special</strong>
+            <span id="item1sub">Funko Pop • Stock pressure rising</span>
+          </div>
           <a href="#" class="it-btn prime" id="item1cta">BUY</a>
         </div>
         <div class="item">
-          <div class="it-info"><strong id="item2name">Rivendell Set</strong><span id="item2sub">LEGO • Momentum building</span></div>
+          <div class="it-info">
+            <strong id="item2name">Rivendell Set</strong>
+            <span id="item2sub">LEGO • Momentum building</span>
+          </div>
           <a href="#" class="it-btn" id="item2cta">WATCH</a>
         </div>
         <div class="item">
-          <div class="it-info"><strong id="item3name">Iron Man Mark 85</strong><span id="item3sub">Premium Statue • Low availability</span></div>
+          <div class="it-info">
+            <strong id="item3name">Iron Man Mark 85</strong>
+            <span id="item3sub">Premium Statue • Low availability</span>
+          </div>
           <a href="#" class="it-btn prime" id="item3cta">BUY NOW</a>
         </div>
       </div>
     </div>
+
     <div class="panel">
       <h3 id="panelTitle2">Signal breakdown</h3>
       <div class="stats">
         <div class="stat-row">
           <span id="score1">Hype score</span>
-          <div class="bar-bg"><div class="bar-fill" style="width:92%"></div></div>
+          <div class="bar-bg"><div class="bar-fill" style="width: 92%"></div></div>
           <span class="stat-n">92%</span>
         </div>
         <div class="stat-row">
           <span id="score2">Stock stress</span>
-          <div class="bar-bg"><div class="bar-fill" style="width:78%"></div></div>
+          <div class="bar-bg"><div class="bar-fill" style="width: 78%"></div></div>
           <span class="stat-n">78%</span>
         </div>
         <div class="stat-row">
           <span id="score3">Growth chance</span>
-          <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
+          <div class="bar-bg"><div class="bar-fill" style="width: 85%"></div></div>
           <span class="stat-n">85%</span>
         </div>
       </div>
@@ -173,24 +426,30 @@
   <script>
     const fallbackLang = "en";
     
-    async function loadLanguage(lang){
-      try{
-        const resp = await fetch(`${lang}.json`);
-        if(!resp.ok) throw new Error();
-        const t = await resp.json();
-        applyTranslations(t);
+    async function loadLanguage(lang) {
+      try {
+        const response = await fetch(`${lang}.json`);
+        if (!response.ok) throw new Error("Lang not found");
+        const translations = await response.json();
+        applyTranslations(translations);
         localStorage.setItem("collectorRadarLang", lang);
-      } catch(e){
-        if(lang !== fallbackLang) loadLanguage(fallbackLang);
+      } catch (error) {
+        if (lang !== fallbackLang) {
+          loadLanguage(fallbackLang);
+        }
       }
     }
 
-    function applyTranslations(t){
+    function applyTranslations(t) {
       const setText = (id, txt) => {
         const el = document.getElementById(id);
-        if(el && txt) el.innerText = txt;
+        if (el && txt) el.innerText = txt;
       };
-      if(t.emailPlaceholder) document.getElementById("emailInput").placeholder = t.emailPlaceholder;
+
+      if (t.emailPlaceholder) {
+        document.getElementById("emailInput").placeholder = t.emailPlaceholder;
+      }
+
       setText("eyebrow", t.eyebrow);
       setText("headline", t.headline);
       setText("subheadline", t.subheadline);
@@ -219,15 +478,26 @@
       setText("card3title", t.card3title);
       setText("card3text", t.card3text);
       setText("footerText", t.footerText);
+
       document.documentElement.lang = t.htmlLang || "en";
       document.title = t.pageTitle || "Collector Radar";
     }
 
-    function isValidEmail(v){
+    function isValidEmail(v) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
     }
 
-    // GESTIONE INVIO (SOLO QUESTA PARTE È NUOVA)
+    document.getElementById("langSelect").addEventListener("change", (e) => {
+      loadLanguage(e.target.value);
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedLang = localStorage.getItem("collectorRadarLang") || fallbackLang;
+      document.getElementById("langSelect").value = savedLang;
+      loadLanguage(savedLang);
+    });
+
+    // LOGICA INVIO WEB3FORMS (AGGIUNTA SENZA TOCCARE ALTRO)
     document.getElementById("ctaButton").addEventListener("click", async () => {
       const input = document.getElementById("emailInput");
       const error = document.getElementById("errorText");
@@ -269,13 +539,6 @@
         button.disabled = false;
         button.innerText = originalText;
       }
-    });
-
-    document.getElementById("langSelect").addEventListener("change", (e) => loadLanguage(e.target.value));
-    window.addEventListener("DOMContentLoaded", () => {
-      const saved = localStorage.getItem("collectorRadarLang") || fallbackLang;
-      document.getElementById("langSelect").value = saved;
-      loadLanguage(saved);
     });
   </script>
 </body>
