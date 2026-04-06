@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collector Radar</title>
+  <meta name="description" content="Track collectibles worldwide before prices move." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#ffffff;
+      --panel:#ffffff;
+      --soft:#f6f6f4;
+      --soft2:#efefeb;
+      --text:#111111;
+      --muted:#656565;
+      --line:#e6e6e1;
+      --accent:#d71920;
+      --accent2:#ffd200;
+      --ok:#0a7a49;
+      --blue:#1f57d6;
+      --shadow:0 10px 30px rgba(0,0,0,.06);
+      --radius:22px;
+      --radius-sm:16px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text)}
+    body{font-family:Inter,Arial,sans-serif}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:var(--max);margin:0 auto;padding:28px 18px 48px}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:18px;
+      padding:10px 0 22px;border-bottom:1px solid var(--line);
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{
+      height:72px;width:auto;display:block;
+    }
+    .brand-title{
+      font-family:"Bebas Neue", sans-serif;
+      font-size:32px;line-height:1;letter-spacing:1px;
+    }
+    .brand-sub{font-size:12px;color:var(--muted);margin-top:3px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+    .lang-box{
+      display:flex;align-items:center;gap:12px;background:#fff;
+      border:1px solid var(--line);border-radius:999px;padding:10px 14px;
+    }
+    .lang-box label{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.6px}
+    select{
+      border:none;background:transparent;color:var(--text);font-weight:700;
+      outline:none;font-size:14px;cursor:pointer
+    }
+
+    .hero{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:24px;
+    }
+    .hero-main{
+      background:var(--panel);border:1px solid var(--line);border-radius:30px;
+      padding:34px;box-shadow:var(--shadow);
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      border:1px solid var(--line);border-radius:999px;
+      padding:8px 12px;background:var(--soft);
+      font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+    }
+    h1{
+      margin:18px 0 12px;
+      font-family:"Bebas Neue", sans-serif;
+      font-size:76px;line-height:.95;letter-spacing:1px;
+      max-width:720px;
+    }
+    .lead{
+      margin:0 0 22px;color:var(--muted);font-size:18px;line-height:1.65;max-width:660px
+    }
+    .badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+    .badge{
+      border:1px solid var(--line);background:var(--soft);
+      padding:10px 14px;border-radius:999px;font-size:13px;font-weight:800
+    }
+    .cta-wrap{
+      border:1px solid var(--line);border-radius:24px;padding:14px;background:#fff
+    }
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .email{
+      flex:1 1 260px;min-width:220px;
+      border:1px solid var(--line);border-radius:14px;padding:16px;
+      font-size:15px;outline:none;background:#fff;color:var(--text)
+    }
+    .button{
+      border:none;border-radius:14px;padding:16px 22px;cursor:pointer;
+      background:#111;color:#fff;font-weight:900;font-size:14px;letter-spacing:.3px
+    }
+    .micro{margin-top:10px;font-size:12px;color:var(--muted)}
+    .notice,.success{display:none;margin-top:8px;font-size:12px;font-weight:700}
+    .notice{color:#b42318}
+    .success{color:var(--ok)}
+
+    .hero-side{
+      display:flex;flex-direction:column;gap:18px;
+    }
+    .panel{
+      background:#fff;border:1px solid var(--line);border-radius:26px;padding:22px;
+      box-shadow:var(--shadow)
+    }
+    .panel h3{
+      margin:0 0 14px;
+      font-family:"Bebas Neue", sans-serif;font-size:28px;letter-spacing:1px
+    }
+    .list{display:flex;flex-direction:column;gap:12px}
+    .item{
+      background:var(--soft);border:1px solid var(--line);border-radius:18px;
+      padding:14px;display:flex;justify-content:space-between;align-items:center;gap:14px
+    }
+    .item strong{display:block;font-size:15px}
+    .item small{display:block;color:var(--muted);margin-top:4px;line-height:1.45}
+    .pill{
+      white-space:nowrap;padding:10px 12px;border-radius:999px;font-size:12px;
+      font-weight:900;letter-spacing:.3px
+    }
+    .buy{background:#111;color:#fff}
+    .watch{background:#fff;color:#111;border:1px solid var(--line)}
+    .score{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:12px
+    }
+    .score-box{
+      border:1px solid var(--line);border-radius:20px;padding:16px;text-align:center;background:var(--soft)
+    }
+    .score-box .n{
+      font-family:"Bebas Neue", sans-serif;font-size:42px;line-height:1;margin-bottom:6px;letter-spacing:1px
+    }
+    .score-box .l{
+      font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.6px
+    }
+
+    .section{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px
+    }
+    .card{
+      background:#fff;border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:var(--shadow)
+    }
+    .card h2{
+      margin:0 0 10px;font-family:"Bebas Neue", sans-serif;font-size:30px;letter-spacing:.8px
+    }
+    .card p{margin:0;color:var(--muted);line-height:1.7;font-size:15px}
+
+    .feature-strip{
+      margin-top:22px;border:1px solid var(--line);border-radius:26px;background:var(--soft);
+      padding:18px 22px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between
+    }
+    .feature{
+      flex:1 1 220px;min-width:180px
+    }
+    .feature-title{
+      font-family:"Bebas Neue", sans-serif;font-size:24px;letter-spacing:.8px;margin-bottom:4px
+    }
+    .feature-text{font-size:14px;color:var(--muted);line-height:1.6}
+
+    .footer{
+      margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
+      font-size:12px;color:var(--muted);text-align:center
+    }
+
+    @media (max-width: 980px){
+      .hero,.section{grid-template-columns:1fr}
+      h1{font-size:58px}
+    }
+    @media (max-width: 640px){
+      .wrap{padding:20px 14px 34px}
+      .topbar{flex-direction:column;align-items:flex-start}
+      h1{font-size:46px}
+      .hero-main{padding:24px}
+      .score{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <img class="logo" src="data:image/png;base64,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" alt="Collector Radar" />
+        <div>
+          <div class="brand-title">Collector Radar</div>
+          <div class="brand-sub" id="brandSub">Global collectible intelligence</div>
+        </div>
+      </div>
+
+      <div class="lang-box">
+        <label for="langSelect" id="langLabel">Language</label>
+        <select id="langSelect">
+          <option value="en">English</option>
+          <option value="it">Italiano</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-main">
+        <div class="eyebrow" id="eyebrow">Early Access</div>
+        <h1 id="headline">Track collectibles worldwide before prices move.</h1>
+        <p class="lead" id="subheadline">One app for Funko Pop, LEGO, anime figures, action figures, premium statues and more. Spot momentum, stock pressure and collectible opportunities earlier.</p>
+
+        <div class="badges">
+          <div class="badge" id="badge1">Realtime opportunity radar</div>
+          <div class="badge" id="badge2">Cross-category tracking</div>
+          <div class="badge" id="badge3">Launch price: €0.99</div>
+        </div>
+
+        <div class="cta-wrap">
+          <div class="cta-row">
+            <input id="emailInput" class="email" type="email" placeholder="Enter your email" />
+            <button id="ctaButton" class="button">Join the waitlist</button>
+          </div>
+          <div class="micro" id="ctaMicro">Be first to access the global launch.</div>
+          <div class="notice" id="errorText">Please enter a valid email address.</div>
+          <div class="success" id="successText">Saved locally. Connect this button to your email tool when ready.</div>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="panel">
+          <h3 id="panelTitle1">Top opportunities</h3>
+          <div class="list">
+            <div class="item">
+              <div>
+                <strong>Luffy Gear 5 Glow</strong>
+                <small id="item1sub">Funko Pop • Stock pressure rising</small>
+              </div>
+              <div class="pill buy" id="item1cta">BUY</div>
+            </div>
+            <div class="item">
+              <div>
+                <strong>Retired LEGO Set</strong>
+                <small id="item2sub">LEGO • Momentum building</small>
+              </div>
+              <div class="pill watch" id="item2cta">WATCH</div>
+            </div>
+            <div class="item">
+              <div>
+                <strong>Limited Anime Statue</strong>
+                <small id="item3sub">Premium Statue • Low availability</small>
+              </div>
+              <div class="pill buy" id="item3cta">STRONG BUY</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 id="panelTitle2">Signal breakdown</h3>
+          <div class="score">
+            <div class="score-box">
+              <div class="n">78</div>
+              <div class="l" id="score1">Hype score</div>
+            </div>
+            <div class="score-box">
+              <div class="n">84</div>
+              <div class="l" id="score2">Stock stress</div>
+            </div>
+            <div class="score-box">
+              <div class="n">73</div>
+              <div class="l" id="score3">Growth chance</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-strip">
+      <div class="feature">
+        <div class="feature-title" id="feat1title">FUNKO • LEGO • ANIME</div>
+        <div class="feature-text" id="feat1text">One place for mainstream collectibles, premium figures and limited releases.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title" id="feat2title">INTERNATIONAL FIRST</div>
+        <div class="feature-text" id="feat2text">Language-selectable main experience built for a global audience from day one.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title" id="feat3title">CLEAN SIGNAL</div>
+        <div class="feature-text" id="feat3text">Designed to reduce noise and surface what deserves attention earlier.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="card">
+        <h2 id="card1title">Built for Collectors</h2>
+        <p id="card1text">Collectors lose time checking too many sites, too many drops and too many price moves. Collector Radar is designed to centralize the signal.</p>
+      </div>
+      <div class="card">
+        <h2 id="card2title">All Major Categories</h2>
+        <p id="card2text">Funko Pop, LEGO, anime figures, action figures, Hot Toys, premium statues and limited collectible releases across major markets.</p>
+      </div>
+      <div class="card">
+        <h2 id="card3title">Join Before Launch</h2>
+        <p id="card3text">You join before launch, help shape the first release and get the lowest launch price when the app goes live.</p>
+      </div>
+    </div>
+
+    <div class="footer" id="footerText">Concept validation page • international positioning • language-selectable main experience</div>
+  </div>
+
+  <script>
+    // ── Inline translations (no fetch needed – works locally + on server) ──
+    const translations = {
+      en: {
+        "htmlLang":"en","pageTitle":"Collector Radar",
+        "metaDescription":"Track collectibles worldwide before prices move.",
+        "brandSub":"Global collectible intelligence","langLabel":"Language",
+        "eyebrow":"Early Access",
+        "headline":"Track collectibles worldwide before prices move.",
+        "subheadline":"One app for Funko Pop, LEGO, anime figures, action figures, premium statues and more. Spot momentum, stock pressure and collectible opportunities earlier.",
+        "badge1":"Realtime opportunity radar","badge2":"Cross-category tracking","badge3":"Launch price: €0.99",
+        "emailPlaceholder":"Enter your email","ctaButton":"Join the waitlist",
+        "ctaMicro":"Be first to access the global launch.",
+        "errorText":"Please enter a valid email address.",
+        "successText":"Saved locally. Connect this button to your email tool when ready.",
+        "panelTitle1":"Top opportunities","panelTitle2":"Signal breakdown",
+        "item1sub":"Funko Pop • Stock pressure rising","item2sub":"LEGO • Momentum building","item3sub":"Premium Statue • Low availability",
+        "item1cta":"BUY","item2cta":"WATCH","item3cta":"STRONG BUY",
+        "score1":"Hype score","score2":"Stock stress","score3":"Growth chance",
+        "feat1title":"FUNKO • LEGO • ANIME","feat1text":"One place for mainstream collectibles, premium figures and limited releases.",
+        "feat2title":"INTERNATIONAL FIRST","feat2text":"Language-selectable main experience built for a global audience from day one.",
+        "feat3title":"CLEAN SIGNAL","feat3text":"Designed to reduce noise and surface what deserves attention earlier.",
+        "card1title":"Built for Collectors","card1text":"Collectors lose time checking too many sites, too many drops and too many price moves. Collector Radar is designed to centralize the signal.",
+        "card2title":"All Major Categories","card2text":"Funko Pop, LEGO, anime figures, action figures, Hot Toys, premium statues and limited collectible releases across major markets.",
+        "card3title":"Join Before Launch","card3text":"You join before launch, help shape the first release and get the lowest launch price when the app goes live.",
+        "footerText":"Concept validation page • international positioning • language-selectable main experience"
+      },
+      it: {
+        "htmlLang":"it","pageTitle":"Collector Radar",
+        "metaDescription":"Traccia i collezionabili prima che il prezzo si muova.",
+        "brandSub":"Intelligence globale per collezionabili","langLabel":"Lingua",
+        "eyebrow":"Accesso anticipato",
+        "headline":"Traccia i collezionabili prima che il prezzo si muova.",
+        "subheadline":"Un'unica app per Funko Pop, LEGO, figure anime, action figure, statue premium e altro. Individua prima momentum, pressione sullo stock e opportunità.",
+        "badge1":"Radar opportunità realtime","badge2":"Tracking multi-categoria","badge3":"Prezzo lancio: €0.99",
+        "emailPlaceholder":"Inserisci la tua email","ctaButton":"Entra nella waitlist",
+        "ctaMicro":"Entra tra i primi al lancio globale.",
+        "errorText":"Inserisci un indirizzo email valido.",
+        "successText":"Salvato in locale. Quando vuoi lo colleghiamo al tuo tool email.",
+        "panelTitle1":"Top opportunità","panelTitle2":"Dettaglio segnali",
+        "item1sub":"Funko Pop • Pressione stock in aumento","item2sub":"LEGO • Momentum in costruzione","item3sub":"Statua premium • Disponibilità bassa",
+        "item1cta":"COMPRA","item2cta":"OSSERVA","item3cta":"COMPRA FORTE",
+        "score1":"Hype score","score2":"Stress stock","score3":"Prob. crescita",
+        "feat1title":"FUNKO • LEGO • ANIME","feat1text":"Un solo posto per collezionabili mainstream, figure premium e release limitate.",
+        "feat2title":"INTERNAZIONALE DAL GIORNO 1","feat2text":"Esperienza con lingua selezionabile pensata per un pubblico globale fin dall'inizio.",
+        "feat3title":"SEGNALE PULITO","feat3text":"Progettato per ridurre il rumore e far emergere prima ciò che merita attenzione.",
+        "card1title":"Pensato per i Collezionisti","card1text":"I collezionisti perdono tempo tra troppi siti, troppe uscite e troppi movimenti di prezzo. Collector Radar serve a concentrare il segnale.",
+        "card2title":"Tutte le Categorie Principali","card2text":"Funko Pop, LEGO, figure anime, action figure, Hot Toys, statue premium e release limitate sui principali mercati.",
+        "card3title":"Entra Prima del Lancio","card3text":"Entri prima del lancio, aiuti a plasmare la prima release e ottieni il prezzo più basso quando l'app andrà live.",
+        "footerText":"Pagina di validazione concept • posizionamento internazionale • esperienza main con lingua selezionabile"
+      },
+      es: {
+        "htmlLang":"es","pageTitle":"Collector Radar",
+        "metaDescription":"Sigue coleccionables antes de que el precio se mueva.",
+        "brandSub":"Inteligencia global para coleccionables","langLabel":"Idioma",
+        "eyebrow":"Acceso anticipado",
+        "headline":"Sigue coleccionables antes de que el precio se mueva.",
+        "subheadline":"Una sola app para Funko Pop, LEGO, figuras anime, action figures, estatuas premium y más. Detecta antes el momentum, la presión de stock y las oportunidades.",
+        "badge1":"Radar de oportunidades en tiempo real","badge2":"Seguimiento multi-categoría","badge3":"Precio de lanzamiento: €0.99",
+        "emailPlaceholder":"Introduce tu email","ctaButton":"Únete a la lista",
+        "ctaMicro":"Sé de los primeros en el lanzamiento global.",
+        "errorText":"Introduce un correo válido.",
+        "successText":"Guardado localmente. Cuando quieras lo conectamos a tu herramienta de email.",
+        "panelTitle1":"Mejores oportunidades","panelTitle2":"Desglose de señales",
+        "item1sub":"Funko Pop • Aumenta la presión de stock","item2sub":"LEGO • Momentum en construcción","item3sub":"Estatua premium • Baja disponibilidad",
+        "item1cta":"COMPRAR","item2cta":"VIGILAR","item3cta":"COMPRAR YA",
+        "score1":"Puntuación hype","score2":"Estrés de stock","score3":"Prob. de crecimiento",
+        "feat1title":"FUNKO • LEGO • ANIME","feat1text":"Un solo lugar para coleccionables mainstream, figuras premium y lanzamientos limitados.",
+        "feat2title":"INTERNACIONAL DESDE EL DÍA 1","feat2text":"Experiencia con idioma seleccionable diseñada para una audiencia global desde el principio.",
+        "feat3title":"SEÑAL LIMPIA","feat3text":"Diseñado para reducir el ruido y destacar antes lo que merece atención.",
+        "card1title":"Pensado para Coleccionistas","card1text":"Los coleccionistas pierden tiempo revisando demasiadas webs, demasiados drops y demasiados movimientos de precio. Collector Radar busca concentrar la señal.",
+        "card2title":"Todas las Categorías Principales","card2text":"Funko Pop, LEGO, figuras anime, action figures, Hot Toys, estatuas premium y lanzamientos limitados en los principales mercados.",
+        "card3title":"Únete Antes del Lanzamiento","card3text":"Entras antes del lanzamiento, ayudas a definir la primera versión y obtienes el precio más bajo cuando la app salga.",
+        "footerText":"Página de validación del concepto • posicionamiento internacional • experiencia principal con idioma seleccionable"
+      },
+      fr: {
+        "htmlLang":"fr","pageTitle":"Collector Radar",
+        "metaDescription":"Suivez les objets de collection avant que le prix ne bouge.",
+        "brandSub":"Intelligence mondiale pour collectionneurs","langLabel":"Langue",
+        "eyebrow":"Accès anticipé",
+        "headline":"Suivez les objets de collection avant que le prix ne bouge.",
+        "subheadline":"Une seule app pour Funko Pop, LEGO, figurines anime, action figures, statues premium et plus encore. Repérez plus tôt le momentum, la pression sur le stock et les opportunités.",
+        "badge1":"Radar d'opportunités en temps réel","badge2":"Suivi multi-catégorie","badge3":"Prix de lancement : 0,99 €",
+        "emailPlaceholder":"Entrez votre email","ctaButton":"Rejoindre la liste",
+        "ctaMicro":"Soyez parmi les premiers au lancement mondial.",
+        "errorText":"Veuillez saisir une adresse email valide.",
+        "successText":"Enregistré localement. On le connectera à votre outil email quand vous voudrez.",
+        "panelTitle1":"Meilleures opportunités","panelTitle2":"Détail des signaux",
+        "item1sub":"Funko Pop • Pression stock en hausse","item2sub":"LEGO • Momentum en construction","item3sub":"Statue premium • Disponibilité faible",
+        "item1cta":"ACHETER","item2cta":"SURVEILLER","item3cta":"ACHAT FORT",
+        "score1":"Score hype","score2":"Stress stock","score3":"Chance de hausse",
+        "feat1title":"FUNKO • LEGO • ANIME","feat1text":"Un seul endroit pour les collectibles mainstream, figurines premium et sorties limitées.",
+        "feat2title":"INTERNATIONAL DÈS LE DÉPART","feat2text":"Expérience avec langue sélectionnable conçue pour un public mondial dès le premier jour.",
+        "feat3title":"SIGNAL NET","feat3text":"Conçu pour réduire le bruit et faire remonter plus tôt ce qui mérite attention.",
+        "card1title":"Pensé pour les Collectionneurs","card1text":"Les collectionneurs perdent du temps sur trop de sites, trop de sorties et trop de mouvements de prix. Collector Radar sert à centraliser le signal.",
+        "card2title":"Toutes les Grandes Catégories","card2text":"Funko Pop, LEGO, figurines anime, action figures, Hot Toys, statues premium et sorties limitées sur les principaux marchés.",
+        "card3title":"Rejoignez Avant le Lancement","card3text":"Vous rejoignez avant le lancement, vous aidez à façonner la première version et vous obtenez le prix le plus bas lorsque l'app sera en ligne.",
+        "footerText":"Page de validation du concept • positionnement international • expérience principale avec langue sélectionnable"
+      },
+      de: {
+        "htmlLang":"de","pageTitle":"Collector Radar",
+        "metaDescription":"Verfolge Sammlerstücke weltweit, bevor die Preise steigen.",
+        "brandSub":"Globale Sammlerstück-Intelligence","langLabel":"Sprache",
+        "eyebrow":"Frühzeitiger Zugang",
+        "headline":"Verfolge Sammlerstücke weltweit, bevor die Preise steigen.",
+        "subheadline":"Eine App für Funko Pop, LEGO, Anime-Figuren, Action-Figuren, Premium-Statuen und mehr. Erkenne Momentum, Lagerengpässe und Sammlermöglichkeiten frühzeitig.",
+        "badge1":"Echtzeit-Gelegenheitsradar","badge2":"Kategorieübergreifendes Tracking","badge3":"Einführungspreis: €0,99",
+        "emailPlaceholder":"E-Mail eingeben","ctaButton":"Warteliste beitreten",
+        "ctaMicro":"Sei der Erste beim globalen Launch.",
+        "errorText":"Bitte gib eine gültige E-Mail-Adresse ein.",
+        "successText":"Lokal gespeichert. Verbinde diesen Button mit deinem E-Mail-Tool wenn du bereit bist.",
+        "panelTitle1":"Top-Gelegenheiten","panelTitle2":"Signal-Übersicht",
+        "item1sub":"Funko Pop • Lagerengpass steigt","item2sub":"LEGO • Momentum aufbauend","item3sub":"Premium-Statue • Geringe Verfügbarkeit",
+        "item1cta":"KAUFEN","item2cta":"BEOBACHTEN","item3cta":"STARK KAUFEN",
+        "score1":"Hype-Score","score2":"Lager-Stress","score3":"Wachstumschance",
+        "feat1title":"FUNKO • LEGO • ANIME","feat1text":"Ein Ort für Mainstream-Sammlerstücke, Premium-Figuren und limitierte Releases.",
+        "feat2title":"INTERNATIONAL VON ANFANG AN","feat2text":"Sprachauswahl-Erlebnis für ein globales Publikum von Tag eins an.",
+        "feat3title":"KLARES SIGNAL","feat3text":"Entwickelt, um Lärm zu reduzieren und das Wesentliche früher sichtbar zu machen.",
+        "card1title":"Für Sammler gemacht","card1text":"Sammler verlieren Zeit damit, zu viele Seiten, zu viele Drops und zu viele Preisbewegungen zu checken. Collector Radar soll das Signal bündeln.",
+        "card2title":"Alle Hauptkategorien","card2text":"Funko Pop, LEGO, Anime-Figuren, Action-Figuren, Hot Toys, Premium-Statuen und limitierte Sammlerstück-Releases auf den großen Märkten.",
+        "card3title":"Vor dem Launch einsteigen","card3text":"Du steigst vor dem Launch ein, hilfst beim Gestalten der ersten Version und erhältst den niedrigsten Preis wenn die App live geht.",
+        "footerText":"Konzept-Validierungsseite • internationale Positionierung • Haupterlebnis mit wählbarer Sprache"
+      }
+    };
+    const fallbackLang = "en";
+    function loadLanguage(lang){
+      const t = translations[lang] || translations[fallbackLang];
+      applyTranslations(t);
+      localStorage.setItem("collectorRadarLang", lang);
+    }
+
+    function setText(id, text){
+      const el = document.getElementById(id);
+      if(el) el.textContent = text;
+    }
+
+    function setPlaceholder(id, text){
+      const el = document.getElementById(id);
+      if(el) el.placeholder = text;
+    }
+
+    function applyTranslations(t){
+      setText("brandSub", t.brandSub);
+      setText("langLabel", t.langLabel);
+      setText("eyebrow", t.eyebrow);
+      setText("headline", t.headline);
+      setText("subheadline", t.subheadline);
+      setText("badge1", t.badge1);
+      setText("badge2", t.badge2);
+      setText("badge3", t.badge3);
+      setPlaceholder("emailInput", t.emailPlaceholder);
+      setText("ctaButton", t.ctaButton);
+      setText("ctaMicro", t.ctaMicro);
+      setText("errorText", t.errorText);
+      setText("successText", t.successText);
+      setText("panelTitle1", t.panelTitle1);
+      setText("panelTitle2", t.panelTitle2);
+      setText("item1sub", t.item1sub);
+      setText("item2sub", t.item2sub);
+      setText("item3sub", t.item3sub);
+      setText("item1cta", t.item1cta);
+      setText("item2cta", t.item2cta);
+      setText("item3cta", t.item3cta);
+      setText("score1", t.score1);
+      setText("score2", t.score2);
+      setText("score3", t.score3);
+      setText("card1title", t.card1title);
+      setText("card1text", t.card1text);
+      setText("card2title", t.card2title);
+      setText("card2text", t.card2text);
+      setText("card3title", t.card3title);
+      setText("card3text", t.card3text);
+      setText("feat1title", t.feat1title);
+      setText("feat1text", t.feat1text);
+      setText("feat2title", t.feat2title);
+      setText("feat2text", t.feat2text);
+      setText("feat3title", t.feat3title);
+      setText("feat3text", t.feat3text);
+      setText("footerText", t.footerText);
+      document.documentElement.lang = t.htmlLang || "en";
+      document.title = t.pageTitle || "Collector Radar";
+      document.querySelector('meta[name="description"]').setAttribute("content", t.metaDescription || "");
+    }
+
+    function isValidEmail(v){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    document.getElementById("ctaButton").addEventListener("click", () => {
+      const input = document.getElementById("emailInput");
+      const error = document.getElementById("errorText");
+      const success = document.getElementById("successText");
+      error.style.display = "none";
+      success.style.display = "none";
+
+      if(!isValidEmail(input.value.trim())){
+        error.style.display = "block";
+        return;
+      }
+
+      const records = JSON.parse(localStorage.getItem("collectorRadarWaitlist") || "[]");
+      records.push({
+        email: input.value.trim(),
+        lang: localStorage.getItem("collectorRadarLang") || fallbackLang,
+        savedAt: new Date().toISOString()
+      });
+      localStorage.setItem("collectorRadarWaitlist", JSON.stringify(records));
+      success.style.display = "block";
+      input.value = "";
+    });
+
+    document.getElementById("langSelect").addEventListener("change", (e) => {
+      loadLanguage(e.target.value);
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const saved = localStorage.getItem("collectorRadarLang") || fallbackLang;
+      document.getElementById("langSelect").value = saved;
+      loadLanguage(saved);
+    });
+  </script>
+</body>
+</html>
