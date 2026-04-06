@@ -213,15 +213,20 @@
         </div>
 
         <div class="cta-wrap">
-          <div class="cta-row">
-            <input id="emailInput" class="email" type="email" placeholder="Enter your email" />
-            <button id="ctaButton" class="button">Join the waitlist</button>
-          </div>
+          <form action="https://api.web3forms.com/submit" method="POST" class="cta-row">
+            
+            <input type="hidden" name="access_key" value="3a3ee7e7-56fa-49e1-ad9d-ad5f707ae275">
+            
+            <input type="hidden" name="from_name" value="Collector Radar Website">
+            
+            <input name="email" id="emailInput" class="email" type="email" placeholder="Enter your email" required />
+            <button type="submit" id="ctaButton" class="button">Join the waitlist</button>
+          </form>
           <div class="micro" id="ctaMicro">Be first to access the global launch.</div>
-          <div class="notice" id="errorText">Please enter a valid email address.</div>
-          <div class="success" id="successText">Saved locally. Connect this button to your email tool when ready.</div>
+          
+          <div class="notice" id="errorText" style="display:none;">Please enter a valid email address.</div>
+          <div class="success" id="successText" style="display:none;">Success! You are on the list.</div>
         </div>
-      </div>
 
       <div class="hero-side">
         <div class="panel">
@@ -491,29 +496,6 @@
     function isValidEmail(v){
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
     }
-
-    document.getElementById("ctaButton").addEventListener("click", () => {
-      const input = document.getElementById("emailInput");
-      const error = document.getElementById("errorText");
-      const success = document.getElementById("successText");
-      error.style.display = "none";
-      success.style.display = "none";
-
-      if(!isValidEmail(input.value.trim())){
-        error.style.display = "block";
-        return;
-      }
-
-      const records = JSON.parse(localStorage.getItem("collectorRadarWaitlist") || "[]");
-      records.push({
-        email: input.value.trim(),
-        lang: localStorage.getItem("collectorRadarLang") || fallbackLang,
-        savedAt: new Date().toISOString()
-      });
-      localStorage.setItem("collectorRadarWaitlist", JSON.stringify(records));
-      success.style.display = "block";
-      input.value = "";
-    });
 
     document.getElementById("langSelect").addEventListener("change", (e) => {
       loadLanguage(e.target.value);
