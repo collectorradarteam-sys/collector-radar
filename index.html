@@ -246,7 +246,7 @@
                 <strong>Limited Anime Statue</strong>
                 <small id="item3sub">Premium Statue • Low availability</small>
               </div>
-              <div class="pill buy" id="item3cta">STRONG BUY</div>
+              <div class="pill buy" id="item3cta">BUY NOW</div>
             </div>
           </div>
         </div>
@@ -318,10 +318,10 @@
         "emailPlaceholder":"Enter your email","ctaButton":"Join the waitlist",
         "ctaMicro":"Be first to access the global launch.",
         "errorText":"Please enter a valid email address.",
-        "successText":"Saved locally. Connect this button to your email tool when ready.",
+        "successText":"You're on the list! We'll be in touch at launch.",
         "panelTitle1":"Top opportunities","panelTitle2":"Signal breakdown",
         "item1sub":"Funko Pop • Stock pressure rising","item2sub":"LEGO • Momentum building","item3sub":"Premium Statue • Low availability",
-        "item1cta":"BUY","item2cta":"WATCH","item3cta":"STRONG BUY",
+        "item1cta":"BUY","item2cta":"WATCH","item3cta":"BUY NOW",
         "score1":"Hype score","score2":"Stock stress","score3":"Growth chance",
         "feat1title":"FUNKO • LEGO • ANIME","feat1text":"One place for mainstream collectibles, premium figures and limited releases.",
         "feat2title":"INTERNATIONAL FIRST","feat2text":"Language-selectable main experience built for a global audience from day one.",
@@ -342,10 +342,10 @@
         "emailPlaceholder":"Inserisci la tua email","ctaButton":"Entra nella waitlist",
         "ctaMicro":"Entra tra i primi al lancio globale.",
         "errorText":"Inserisci un indirizzo email valido.",
-        "successText":"Salvato in locale. Quando vuoi lo colleghiamo al tuo tool email.",
+        "successText":"Sei in lista! Ti contatteremo al lancio.",
         "panelTitle1":"Top opportunità","panelTitle2":"Dettaglio segnali",
         "item1sub":"Funko Pop • Pressione stock in aumento","item2sub":"LEGO • Momentum in costruzione","item3sub":"Statua premium • Disponibilità bassa",
-        "item1cta":"COMPRA","item2cta":"OSSERVA","item3cta":"COMPRA FORTE",
+        "item1cta":"COMPRA","item2cta":"OSSERVA","item3cta":"COMPRA SUBITO",
         "score1":"Hype score","score2":"Stress stock","score3":"Prob. crescita",
         "feat1title":"FUNKO • LEGO • ANIME","feat1text":"Un solo posto per collezionabili mainstream, figure premium e release limitate.",
         "feat2title":"INTERNAZIONALE DAL GIORNO 1","feat2text":"Esperienza con lingua selezionabile pensata per un pubblico globale fin dall'inizio.",
@@ -366,7 +366,7 @@
         "emailPlaceholder":"Introduce tu email","ctaButton":"Únete a la lista",
         "ctaMicro":"Sé de los primeros en el lanzamiento global.",
         "errorText":"Introduce un correo válido.",
-        "successText":"Guardado localmente. Cuando quieras lo conectamos a tu herramienta de email.",
+        "successText":"¡Estás en la lista! Te avisaremos en el lanzamiento.",
         "panelTitle1":"Mejores oportunidades","panelTitle2":"Desglose de señales",
         "item1sub":"Funko Pop • Aumenta la presión de stock","item2sub":"LEGO • Momentum en construcción","item3sub":"Estatua premium • Baja disponibilidad",
         "item1cta":"COMPRAR","item2cta":"VIGILAR","item3cta":"COMPRAR YA",
@@ -390,10 +390,10 @@
         "emailPlaceholder":"Entrez votre email","ctaButton":"Rejoindre la liste",
         "ctaMicro":"Soyez parmi les premiers au lancement mondial.",
         "errorText":"Veuillez saisir une adresse email valide.",
-        "successText":"Enregistré localement. On le connectera à votre outil email quand vous voudrez.",
+        "successText":"Vous êtes sur la liste ! On vous contactera au lancement.",
         "panelTitle1":"Meilleures opportunités","panelTitle2":"Détail des signaux",
         "item1sub":"Funko Pop • Pression stock en hausse","item2sub":"LEGO • Momentum en construction","item3sub":"Statue premium • Disponibilité faible",
-        "item1cta":"ACHETER","item2cta":"SURVEILLER","item3cta":"ACHAT FORT",
+        "item1cta":"ACHETER","item2cta":"SURVEILLER","item3cta":"ACHETER IMMÉDIATEMENT",
         "score1":"Score hype","score2":"Stress stock","score3":"Chance de hausse",
         "feat1title":"FUNKO • LEGO • ANIME","feat1text":"Un seul endroit pour les collectibles mainstream, figurines premium et sorties limitées.",
         "feat2title":"INTERNATIONAL DÈS LE DÉPART","feat2text":"Expérience avec langue sélectionnable conçue pour un public mondial dès le premier jour.",
@@ -414,10 +414,10 @@
         "emailPlaceholder":"E-Mail eingeben","ctaButton":"Warteliste beitreten",
         "ctaMicro":"Sei der Erste beim globalen Launch.",
         "errorText":"Bitte gib eine gültige E-Mail-Adresse ein.",
-        "successText":"Lokal gespeichert. Verbinde diesen Button mit deinem E-Mail-Tool wenn du bereit bist.",
+        "successText":"Du bist auf der Liste! Wir melden uns beim Launch.",
         "panelTitle1":"Top-Gelegenheiten","panelTitle2":"Signal-Übersicht",
         "item1sub":"Funko Pop • Lagerengpass steigt","item2sub":"LEGO • Momentum aufbauend","item3sub":"Premium-Statue • Geringe Verfügbarkeit",
-        "item1cta":"KAUFEN","item2cta":"BEOBACHTEN","item3cta":"STARK KAUFEN",
+        "item1cta":"KAUFEN","item2cta":"BEOBACHTEN","item3cta":"SOFORT KAUFEN",
         "score1":"Hype-Score","score2":"Lager-Stress","score3":"Wachstumschance",
         "feat1title":"FUNKO • LEGO • ANIME","feat1text":"Ein Ort für Mainstream-Sammlerstücke, Premium-Figuren und limitierte Releases.",
         "feat2title":"INTERNATIONAL VON ANFANG AN","feat2text":"Sprachauswahl-Erlebnis für ein globales Publikum von Tag eins an.",
@@ -492,10 +492,11 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
     }
 
-    document.getElementById("ctaButton").addEventListener("click", () => {
+    document.getElementById("ctaButton").addEventListener("click", async () => {
       const input = document.getElementById("emailInput");
       const error = document.getElementById("errorText");
       const success = document.getElementById("successText");
+      const btn = document.getElementById("ctaButton");
       error.style.display = "none";
       success.style.display = "none";
 
@@ -504,15 +505,34 @@
         return;
       }
 
-      const records = JSON.parse(localStorage.getItem("collectorRadarWaitlist") || "[]");
-      records.push({
-        email: input.value.trim(),
-        lang: localStorage.getItem("collectorRadarLang") || fallbackLang,
-        savedAt: new Date().toISOString()
-      });
-      localStorage.setItem("collectorRadarWaitlist", JSON.stringify(records));
-      success.style.display = "block";
-      input.value = "";
+      btn.disabled = true;
+      btn.style.opacity = "0.6";
+
+      try {
+        const lang = localStorage.getItem("collectorRadarLang") || fallbackLang;
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            access_key: "3a3ee7e7-56fa-49e1-ad9d-ad5f707ae275",
+            email: input.value.trim(),
+            subject: "Collector Radar – Nuova iscrizione waitlist",
+            message: `Nuova iscrizione alla waitlist.\nEmail: ${input.value.trim()}\nLingua: ${lang}`
+          })
+        });
+        const data = await res.json();
+        if(data.success){
+          success.style.display = "block";
+          input.value = "";
+        } else {
+          error.style.display = "block";
+        }
+      } catch(e) {
+        error.style.display = "block";
+      } finally {
+        btn.disabled = false;
+        btn.style.opacity = "1";
+      }
     });
 
     document.getElementById("langSelect").addEventListener("change", (e) => {
